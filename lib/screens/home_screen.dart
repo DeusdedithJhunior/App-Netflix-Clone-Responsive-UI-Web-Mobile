@@ -5,7 +5,7 @@ import '../components/widgets.dart';
 // aqui fica a classe que vai gerenciar a home sreen
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({required Key key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -50,8 +50,41 @@ class _HomeScreenState extends State<HomeScreen> {
         controller: _scrollController,
         slivers: const [
           SliverToBoxAdapter(
-            child: ContentHeader(featuredContent: sintelContent,),
-          )
+            child: ContentHeader(
+              featuredContent: sintelContent,
+            ),
+          ),
+          SliverPadding(
+            padding: EdgeInsets.only(top: 20),
+            sliver: SliverToBoxAdapter(
+              child: Previews(title: 'Prévias', contentList: previews),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: ContentList(
+              key: PageStorageKey('myList'),
+              title: 'Minha Lista',
+              contentList: myList,
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: ContentList(
+              key: PageStorageKey('originals'),
+              title: 'Só na Netflix',
+              contentList: originals,
+              isOriginals: true,
+            ),
+          ),
+          SliverPadding(
+            padding: EdgeInsets.only(bottom: 20),
+            sliver: SliverToBoxAdapter(
+              child: ContentList(
+                key: PageStorageKey('trending'),
+                title: 'Em alta',
+                contentList: trending,
+              ),
+            ),
+          ),
         ],
       ),
     );
